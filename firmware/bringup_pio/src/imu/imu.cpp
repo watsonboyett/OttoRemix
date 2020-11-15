@@ -18,7 +18,7 @@ void Imu::RegisterWrite(uint8_t addr, uint8_t value)
   i2c->WriteByte(BMX160_ADDRESS, addr, value);
 }
 
-void Imu::Setup()
+void Imu::begin()
 {
   i2c = I2CHelper::GetInstance();
   i2c->Setup();
@@ -36,14 +36,14 @@ void Imu::Setup()
   }
 }
 
-void Imu::Update()
+void Imu::update()
 {
   device.getEvent(&accel, &gyro, &mag);
 }
 
 #define ser Serial
 
-void Imu::PrintState()
+void Imu::printState()
 {
   /* Display the accel results (acceleration is measured in m/s^2) */
   ser.print("Accel ");
@@ -67,7 +67,7 @@ void Imu::PrintState()
   ser.println("uT");
 }
 
-void Imu::PrintStateRaw()
+void Imu::printStateRaw()
 {
   // NOTE: This format is used by MotionCal (so don't change it)
   ser.print("Raw:");
@@ -83,7 +83,7 @@ void Imu::PrintStateRaw()
   ser.println();
 }
 
-void Imu::PrintSettings()
+void Imu::printSettings()
 {
   sensor_t accel, gyro, mag;
   device.getSensor(&accel, &gyro, &mag);

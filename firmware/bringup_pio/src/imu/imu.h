@@ -1,18 +1,18 @@
 #pragma once
 
-#include <Arduino.h>
-#include "I2CHelper.h"
 #include "bmx160.h"
+#include "I2CHelper.h"
+#include <Arduino.h>
 
 class Imu
 {
 public:
     Imu(){};
-    void Setup();
-    void Update();
-    void PrintSettings();
-    void PrintState();
-    void PrintStateRaw();
+    void begin();
+    void update();
+    void printSettings();
+    void printState();
+    void printStateRaw();
 
 private:
     static I2CHelper *i2c;

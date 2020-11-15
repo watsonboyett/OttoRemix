@@ -39,17 +39,9 @@ volatile uint8_t touchpad_sys0 = 0;
 void Touchpad::ready()
 {
   touchpad_has_data = 1;
-
-  // read gesture registers from touchpad
-  // TODO: we're not actually using the device address here, FIXME
-  request(0x0000, &touchpad_status);
-  request(0x000D, &touchpad_ges0);
-  request(0x000E, &touchpad_ges1);
-  request(0x000F, &touchpad_sys0);
-  //touchpad_end_comm_window();
 }
 
-void Touchpad::PrintConfig()
+void Touchpad::printConfig()
 {
   for (int i = 0; i < 0xFF; i++)
   {
@@ -90,7 +82,7 @@ void Touchpad::PrintConfig()
 
 I2CHelper *Touchpad::i2c;
 
-void Touchpad::Setup()
+void Touchpad::begin()
 {
   i2c = I2CHelper::GetInstance();
   i2c->Setup();
@@ -119,11 +111,20 @@ enum TOUCHPAD_REG_GES_EVNT_1
   ZOOM = 0x04
 };
 
-void Touchpad::Update()
+void Touchpad::update()
 {
   if (touchpad_has_data)
   {
     touchpad_has_data = 0;
+    gesture = gesture_t::NONE;
+
+    // read gesture registers from touchpad
+    // TODO: we're not actually using the device address here, FIXME
+    request(0x0000, &touchpad_status);
+    request(0x000D, &touchpad_ges0);
+    request(0x000E, &touchpad_ges1);
+    request(0x000F, &touchpad_sys0);
+    end_comm_window();
 
     //    Serial.println(touchpad_ges0, HEX);
     //    Serial.println(touchpad_ges1, HEX);
@@ -184,15 +185,13 @@ void Touchpad::Update()
 
     if (touchpad_ges0 | touchpad_ges1)
     {
-      Serial.println("Touch detected: " + gesture);
+      //Serial.println("Touch detected: " + gesture);
     }
   }
 }
 
-void Touchpad::PrintState()
+void Touchpad::printState()
 {
-  gesture = gesture_t::NONE;
-
   if (gesture == NONE)
     return;
 
@@ -246,5 +245,5 @@ void Touchpad::PrintState()
   }
   }
 
-  Serial.println("Touch detected: " + gesture);
+  Serial.println("Touch: " + gesture_str);
 }

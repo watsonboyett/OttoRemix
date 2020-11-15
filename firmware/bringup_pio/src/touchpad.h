@@ -1,7 +1,7 @@
 #pragma once
 
-#include <Arduino.h>
 #include "I2CHelper.h"
+#include <Arduino.h>
 
 class Touchpad
 {
@@ -21,10 +21,10 @@ public:
     } gesture_t;
 
     Touchpad(uint8_t addr, uint8_t int_pin) : device_addr(addr), int_pin(int_pin) {}
-    void Setup();
-    void Update();
-    void PrintState();
-    void PrintConfig();
+    void begin();
+    void update();
+    void printState();
+    void printConfig();
 
     uint32_t gesture;
 
