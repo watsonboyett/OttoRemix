@@ -116,8 +116,8 @@ public:
 
 	MusicalNote() {}
 	MusicalNote(const char * note, int octave, double length, double bpm) {
-		freq = GetNoteFreq(note, octave);
-		duration = ConvertNoteLengthToTime(length, bpm) * 1000;
+		freq_Hz = GetNoteFreq(note, octave);
+		duration_ms = ConvertNoteLengthToTime(length, bpm) * 1000;
 	 };
 
 	~MusicalNote(void) {};
@@ -126,8 +126,8 @@ public:
 	static double GetNoteRpm(const char * note, int octave);
 	static double ConvertNoteLengthToTime(double note_length, double bpm);
 
-	double freq = 0;
-	double duration = 0;
+	double freq_Hz = 0;
+	double duration_ms = 0;
 };
 
 

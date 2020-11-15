@@ -33,8 +33,10 @@ void SheetMusicCatalog::LoadMarioTheme(SheetMusic *sheet, int octave, int bpm)
     sheet->Clear();
 
     sheet->AppendNote(MusicalNote("E", octave, MusicalNote::SIXTEENTH, bpm));
-    sheet->AppendNote(MusicalNote("E", octave, MusicalNote::EIGHTH, bpm));
-    sheet->AppendNote(MusicalNote("E", octave, MusicalNote::EIGHTH, bpm));
+    sheet->AppendNote(MusicalNote("E", octave, MusicalNote::SIXTEENTH, bpm));
+    sheet->AppendNote(MusicalNote("0", octave, MusicalNote::SIXTEENTH, bpm));
+    sheet->AppendNote(MusicalNote("E", octave, MusicalNote::SIXTEENTH, bpm));
+    sheet->AppendNote(MusicalNote("0", octave, MusicalNote::SIXTEENTH, bpm));
     sheet->AppendNote(MusicalNote("C", octave, MusicalNote::SIXTEENTH, bpm));
     sheet->AppendNote(MusicalNote("E", octave, MusicalNote::EIGHTH, bpm));
     sheet->AppendNote(MusicalNote("G", octave, MusicalNote::EIGHTH, bpm));

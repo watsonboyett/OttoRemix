@@ -6,6 +6,19 @@ void Sound::play(float frequency, long noteDuration)
     {
         tone(output_pin, frequency, noteDuration);
     }
+    else
+    {
+        noTone(output_pin);
+    }
+    
+}
+
+void Sound::playWithDelay(float frequency, long noteDuration)
+{
+    if (frequency > 20)
+    {
+        tone(output_pin, frequency, noteDuration);
+    }
 
     delay(noteDuration);
     noTone(output_pin);

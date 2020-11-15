@@ -15,7 +15,7 @@ public:
 
 private:
     const float conv_factor = 0.01724f; // 1/58, per datasheet (assumes speed of sound is 340m/s and accounts for reflection distance)
-    const int timeout_us = 23200;       // 400 cm * 58
+    const int timeout_us = 24000;       // 400 cm * 58
 
     int trig_pin = -1;
     int echo_pin = -1;

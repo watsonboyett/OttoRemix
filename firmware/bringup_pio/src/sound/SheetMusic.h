@@ -17,8 +17,8 @@ public:
 
         for (int i = 0; i < NOTES_MAX; i++)
         {
-            buffer[i].freq = 0;
-            buffer[i].duration = 0;
+            buffer[i].freq_Hz = 0;
+            buffer[i].duration_ms = 0;
         }
     }
 
@@ -26,8 +26,8 @@ public:
     {
         if (write_idx < NOTES_MAX)
         {
-            buffer[write_idx].freq = note.freq;
-            buffer[write_idx].duration = note.duration;
+            buffer[write_idx].freq_Hz = note.freq_Hz;
+            buffer[write_idx].duration_ms = note.duration_ms;
             write_idx++;
         }
     }
@@ -36,8 +36,8 @@ public:
     {
         if (read_idx < write_idx)
         {
-            note->freq = buffer[read_idx].freq;
-            note->duration = buffer[read_idx].duration;
+            note->freq_Hz = buffer[read_idx].freq_Hz;
+            note->duration_ms = buffer[read_idx].duration_ms;
             read_idx++;
 
             return true;
