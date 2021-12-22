@@ -24,10 +24,10 @@ Otto otto;
 //#define USE_INTERNAL_BT 1
 
 #define N_SERVOS 4
-#define PIN_YL 5 //Left leg
-#define PIN_YR 15  //Right leg
-#define PIN_RL 6 //Left foot
-#define PIN_RR 16 //Right foot
+#define PIN_YL 6 //Left leg
+#define PIN_YR 16  //Right leg
+#define PIN_RL 9 //Left foot
+#define PIN_RR 15 //Right foot
 
 #define PIN_Buzzer 1      //BUZZER pin
 #define PIN_NoiseSensor 7 // IN 1
@@ -617,9 +617,9 @@ void setup()
 
   BLE_init();
 
-  otto.init(PIN_YL, PIN_YR, PIN_RL, PIN_RR, false, PIN_Buzzer); //, PIN_NoiseSensor, PIN_Buzzer, PIN_Trigger, PIN_Echo);
-  // not available on Ottoky // otto.initMATRIX(DIN_PIN, CS_PIN, CLK_PIN, LED_DIRECTION);
-  // not available on Ottoky // otto.matrixIntensity(7);
+  otto.init(PIN_YL, PIN_YR, PIN_RL, PIN_RR, true, PIN_Buzzer); //, PIN_NoiseSensor, PIN_Buzzer, PIN_Trigger, PIN_Echo);
+  otto.initMATRIX(); //DIN_PIN, CS_PIN, CLK_PIN, LED_DIRECTION);
+  otto.matrixIntensity(2);
   //randomSeed(analogRead(PIN_NoiseSensor));
   // not available on Ottoky // pinMode(PIN_ASSEMBLY, INPUT_PULLUP);
   pinMode(PIN_Button, INPUT);
@@ -640,18 +640,18 @@ void setup()
   SCmd.addCommand("I", requestProgramId);
   SCmd.addDefaultHandler(receiveUnknown);
 
-  otto.sing(S_connection);
+  //otto.sing(S_connection);
   otto.home();
-  for (int i = 0; i < 2; i++)
-  {
-    for (int i = 0; i < 8; i++)
-    {
-      otto.putAnimationMouth(littleUuh, i);
-      delay(150);
-    }
-  }
-  otto.putMouth(smile);
-  otto.sing(S_happy);
+  // for (int i = 0; i < 2; i++)
+  // {
+  //   for (int i = 0; i < 8; i++)
+  //   {
+  //     otto.putAnimationMouth(littleUuh, i);
+  //     delay(150);
+  //   }
+  // }
+  otto.putMouth(zero);
+  //otto.sing(S_happy);
   delay(200);
 
   // if (EEPROM.read(5) == name_fir)

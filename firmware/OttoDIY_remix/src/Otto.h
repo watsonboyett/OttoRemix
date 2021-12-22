@@ -81,10 +81,10 @@ class Otto
 
     //-- Gestures
     void playGesture(int gesture);
-    void initMATRIX(int DIN, int CS, int CLK, int rotate);
+    void initMATRIX(); // (int DIN, int CS, int CLK, int rotate);
     void matrixIntensity(int intensity);
     void setLed(byte X, byte Y, byte value);
-    void writeText (const char * s, byte scrollspeed);
+    //void writeText (const char * s, byte scrollspeed);
 
     // -- Servo limiter
     void enableServoLimit(int speed_limit_degree_per_sec = SERVO_LIMIT_DEFAULT);
