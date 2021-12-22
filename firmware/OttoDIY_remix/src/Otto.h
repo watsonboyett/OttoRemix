@@ -39,7 +39,9 @@ class Otto
 
     //-- Oscillator Trims
     void setTrims(int YL, int YR, int RL, int RR);
-    void saveTrimsOnEEPROM();
+    bool saveTrimsToFile();
+    bool loadTrimsFromFile();
+    bool printTrimsFile();
 
     //-- Predetermined Motion Functions
     void _moveServos(int time, int  servo_target[]);

@@ -231,7 +231,7 @@ void receiveTrims()
   else
   {
     otto.setTrims(trim_YL, trim_YR, trim_RL, trim_RR);
-    otto.saveTrimsOnEEPROM();
+    otto.saveTrimsToFile();
   }
   sendFinalAck();
 }

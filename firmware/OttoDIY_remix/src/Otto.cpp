@@ -7,8 +7,16 @@
 #include "Otto.h"
 #include "Oscillator.h"
 
+#include "SdFatHelper.h"
+#include <ArduinoJson.h>
+
+SdFatHelper sdfat;
+
 void Otto::init(int YL, int YR, int RL, int RR, bool load_calibration, int Buzzer)
 {
+  sdfat.begin();
+  sdfat.printFS();
+  printTrimsFile();
 
   servo_pins[0] = YL;
   servo_pins[1] = YR;
@@ -18,15 +26,8 @@ void Otto::init(int YL, int YR, int RL, int RR, bool load_calibration, int Buzze
   attachServos();
   isOttoResting = false;
 
-  // TODO: store these in flash rather than hard-coded
-  int trims[4] = {30, 10, -5, 5};  // YL (left leg), YR (right leg), RL (left foot), RR (right foot)
-
   if (load_calibration) {
-    for (int i = 0; i < 4; i++) {
-      int servo_trim = trims[i]; //EEPROM.read(i);
-      if (servo_trim > 128) servo_trim -= 256;
-      servo[i].SetTrim(servo_trim);
-    }
+    loadTrimsFromFile();
   }
 
   //Buzzer pin:
@@ -58,6 +59,7 @@ void Otto::detachServos()
 ///////////////////////////////////////////////////////////////////
 //-- OSCILLATORS TRIMS ------------------------------------------//
 ///////////////////////////////////////////////////////////////////
+
 void Otto::setTrims(int YL, int YR, int RL, int RR)
 {
   servo[0].SetTrim(YL);
@@ -66,13 +68,83 @@ void Otto::setTrims(int YL, int YR, int RL, int RR)
   servo[3].SetTrim(RR);
 }
 
-void Otto::saveTrimsOnEEPROM()
-{
+StaticJsonDocument<128> trims_json;
+const char trims_filename[20] = "trims.json";
+  
+  // TODO: store these in flash rather than hard-coded
+  int trims[4] = {30, 10, -5, 5};  // YL (left leg), YR (right leg), RL (left foot), RR (right foot)
 
-  for (int i = 0; i < 4; i++)
-  {
-    //EEPROM.write(i, servo[i].getTrim());
+bool Otto::saveTrimsToFile()
+{
+  File file;
+  bool success = sdfat.open_new(trims_filename, file);
+  if (!file) {
+    Serial.println(F("Failed to create file"));
+    return false;
   }
+
+  JsonObject root = trims_json.to<JsonObject>();
+  JsonArray trims = root.createNestedArray("trims");
+  for (int i = 0; i < 4; i++) {
+    trims.add(servo[i].getTrim());
+  }
+
+  // Serialize JSON to file
+  if (serializeJson(trims_json, file) == 0) {
+    Serial.println(F("Failed to write trims to file"));
+    return false;
+  }
+  
+  sdfat.close(file);
+
+  return true;
+}
+
+bool Otto::loadTrimsFromFile()
+{
+  File file;
+  bool success = sdfat.open_read(trims_filename, file);
+  if (!file) {
+    Serial.println(F("Failed to read file"));
+    return false;
+  }
+
+  // Deserialize the JSON document
+  DeserializationError error = deserializeJson(trims_json, file);
+  if (error) {
+    Serial.println(F("Failed to deserialize file"));
+    return false;
+  }
+
+  // Close the file (File's destructor doesn't close the file)
+  sdfat.close(file);
+
+  for (int i = 0; i < 4; i++) {
+    int trim = trims_json["trims"][i] | 0.0;
+    servo[i].SetTrim(trim);
+  }
+
+  return true;
+}
+
+bool Otto::printTrimsFile()
+{
+  File file;
+  bool success = sdfat.open_read(trims_filename, file);
+  if (!file) {
+    Serial.println(F("Failed to read file"));
+    return false;
+  }
+
+  Serial.println("------------");
+  while (file.available()) {
+    Serial.write(file.read());
+  }
+  Serial.println();
+  Serial.println("------------");
+  sdfat.close(file);
+  yield();
+  return true;
 }
 
 ///////////////////////////////////////////////////////////////////
