@@ -67,6 +67,21 @@ void Imu::printState()
   ser.println("uT");
 }
 
+void Imu::printStateUni()
+{
+  // NOTE: This format is used by Adafruit Calibration Tools (so don't change it)
+  Serial.print("Uni:");
+  Serial.print(accel.acceleration.x); Serial.print(",");
+  Serial.print(accel.acceleration.y); Serial.print(",");
+  Serial.print(accel.acceleration.z); Serial.print(",");
+  Serial.print(gyro.gyro.x, 4); Serial.print(",");
+  Serial.print(gyro.gyro.y, 4); Serial.print(",");
+  Serial.print(gyro.gyro.z, 4); Serial.print(",");
+  Serial.print(mag.magnetic.x); Serial.print(",");
+  Serial.print(mag.magnetic.y); Serial.print(",");
+  Serial.print(mag.magnetic.z); Serial.println("");
+}
+
 void Imu::printStateRaw()
 {
   // NOTE: This format is used by MotionCal (so don't change it)
@@ -79,8 +94,7 @@ void Imu::printStateRaw()
   ser.print(device.gyro_raw.z); ser.print(",");
   ser.print(device.mag_raw.x); ser.print(",");
   ser.print(device.mag_raw.y); ser.print(",");
-  ser.print(device.mag_raw.z); 
-  ser.println();
+  ser.print(device.mag_raw.z); ser.println();
 }
 
 void Imu::printSettings()

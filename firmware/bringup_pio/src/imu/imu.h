@@ -12,6 +12,7 @@ public:
     void update();
     void printSettings();
     void printState();
+    void printStateUni();
     void printStateRaw();
 
 private:
