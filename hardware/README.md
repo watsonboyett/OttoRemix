@@ -48,7 +48,7 @@ Control board for servos, displays, and sensors.
 ### Speaker
 * P/N: 
 * Uses PWM output from MCU to drive audio amplifier
-* RC filter on
+* RC filter on amp inputs
 * Powered from 5V supply
 * 2-pin header
 
@@ -87,6 +87,15 @@ Control board for servos, displays, and sensors.
 
 ### v1B
 
-* Added 100 uF caps near servo power supplies
+* Added 100 uF caps near servo and LED power supply pins
 * Changed external board caps to 10 uF
 * Swapped location of buzzer and power-off headers
+* Removed buzzer (uses speaker only)
+* Added PDM microphone (port on bottom)
+* Fixed power sharing from USB-VBUS or battery (defaults to VBUS if both present)
+* Fixed schematic typo: D8 changed to D9, to reflect actual pin number (no layout changes)
+
+### Future Changes
+
+
+
