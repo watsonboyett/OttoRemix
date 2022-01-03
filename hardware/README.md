@@ -85,17 +85,22 @@ Control board for servos, displays, and sensors.
 
 * Initial design
 
-### v1B
+### v2A
 
+* Fixed schematic typo: D8 changed to D9, to reflect actual pin number
 * Added 100 uF caps near servo and LED power supply pins
 * Changed external board caps to 10 uF
-* Swapped location of buzzer and power-off headers
 * Removed buzzer (uses speaker only)
-* Added PDM microphone (port on bottom)
-* Fixed power sharing from USB-VBUS or battery (defaults to VBUS if both present)
-* Fixed schematic typo: D8 changed to D9, to reflect actual pin number (no layout changes)
+* Moved external connectors/silkscreen to bottom side (re-arranged all locations)
+* Added power selector IC (P/N: TPS2115) for USB-VBUS vs. battery (defaults to VBUS if both present)
+* Added support/connector for PIR sensor (pwr, gnd, IO/interrupt)
+* Added PDM microphone (P/N: SPK0641HT4H, port on top)
+* Added temp/humidity sensor (P/N: SHT41)
+* Added ambient light sensor (P/N: APDS-9250) and light pipe
+* Added air pressure sensor (P/N: LPS22HB)
+* Added air quality/VOC sensor (P/N: SGP41)
+* Added neopixel LED (SK6812-mini) and light pipe
 
 ### Future Changes
-
 
 
